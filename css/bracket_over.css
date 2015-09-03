@@ -1,0 +1,39 @@
+a.round-label {
+  display: none;
+}
+body, .challonge_tournaments .challonge_bracket {
+  font-family: "Myriad Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 1.42857;
+  color: #888;
+}
+.caret {
+  display: none;
+}
+.match_identifier {
+  display: inline-block;
+  border-width: 1px;
+  border-color: rgba(0,0,0,0);
+  border-style: solid;
+}
+.challonge_tournaments .challonge_bracket table.match_table ul.dropdown-menu:hover,
+.challonge_tournaments .challonge_bracket table.match_table a.match_identifier + ul.dropdown-menu.enabled:not(:hover){
+  display: none;
+}
+a:hover, a:focus {
+  text-decoration: none;
+}
+.challonge_tournaments .challonge_bracket table.match_table a.match_identifier:hover {
+  box-shadow: none;
+}
+
+.overthrow_bracket:hover {
+  cursor: default;
+}
+.challonge_tournaments .challonge_bracket div.rounds td.round {
+  background-color: transparent;
+  border: none;
+}
+.challonge_tournaments .challonge_bracket div.rounds table {
+  background: url('/img/stripe.png') no-repeat scroll left top, rgba(21, 21, 21, 0.7);
+}
