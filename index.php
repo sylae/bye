@@ -129,7 +129,11 @@ STUFF;
             }
             ?>
           </tbody>
-        </table>
+        </table><?php if ($config['challonge_expose']) {
+          echo <<<CHA
+        <div style="background: rgba(21, 21, 21, 0.7);"><div class="panel-footer" style="background: rgba(21, 21, 21, 0.7);"><span class="pull-right"><small>Powered by Challonge <img src="img/challonge.png" style="height:1em" /></small></span><br /></div></div>
+CHA;
+          } ?>
       </div>
     </div>
   </body>
