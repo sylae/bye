@@ -30,13 +30,14 @@ foreach ($data['matches'] as $k => $v) {
     $p2s = 0;
     foreach ($points as $k => $val) {
       $p = explode("-", $val);
-      var_dump($p, $val);
-      $p1 += $p[0];
-      $p2 += $p[1];
-      if ($p[0] > $p[1]) {
-        $p1s++;
-      } else {
-        $p2s++;
+      if (array_key_exists(1, $p)) {
+        $p1 += $p[0];
+        $p2 += $p[1];
+        if ($p[0] > $p[1]) {
+          $p1s++;
+        } else {
+          $p2s++;
+        }
       }
     }
     $matches[$v['match']['id']] = array(
@@ -130,11 +131,13 @@ STUFF;
             }
             ?>
           </tbody>
-        </table><?php if ($config['challonge_expose']['standings']) {
+        </table><?php
+        if ($config['challonge_expose']['standings']) {
           echo <<<CHA
         <div style="background: rgba(21, 21, 21, 0.7);"><div class="panel-footer" style="background: rgba(21, 21, 21, 0.7);"><span class="pull-right"><small>Powered by Challonge <img src="img/challonge.png" style="height:1em" /></small></span><br /></div></div>
 CHA;
-          } ?>
+        }
+        ?>
       </div>
     </div>
   </body>
