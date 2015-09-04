@@ -4,7 +4,7 @@ require_once 'config.php';
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Standings</title>
+    <title>Bracket</title>
     <script src="/js/jquery.min.js" type="text/javascript" charset="UTF-8"></script>
     <link href="/css/bootstrap.css" rel="stylesheet" />
     <script src="/js/bootstrap.min.js"></script>
