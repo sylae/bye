@@ -2,8 +2,13 @@
 require_once 'config.php';
 require_once 'sorts.php';
 
-$data = file_get_contents("https://api.challonge.com/v1/tournaments/" . $config['challonge_id'] . ".json?api_key=" . $config['challonge_api'] . "&include_participants=1&include_matches=1");
-$data = json_decode($data, true)['tournament'];
+$data = json_decode(file_get_contents(
+      "https://api.challonge.com/v1/tournaments/" .
+      $config['challonge_id'] .
+      ".json?api_key=" .
+      $config['challonge_api'] .
+      "&include_participants=1&include_matches=1"
+    ), true)['tournament'];
 $teams = array();
 $matches = array();
 
