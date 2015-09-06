@@ -51,6 +51,13 @@ $data = json_decode(file_get_contents(
       </div>
     </nav>
     <div class="container">
+      <div class="col-md-12">
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped" style="width: <?php echo $data['progress_meter']; ?>%;">
+            <?php echo $data['progress_meter']; ?>%
+          </div>
+        </div>
+      </div>
       <div class="col-md-5">
         <h3>Pending Matches</h3>
         <?php
@@ -123,22 +130,16 @@ PEND;
       </div>
       <div class="col-md-7">
         <h3>Tournament Information</h3>
-        <h6>Tournament Progress</h6>
-        <div class="progress">
-          <div class="progress-bar" style="width: <?php echo $data['progress_meter']; ?>%;">
-            <?php echo $data['progress_meter']; ?>%
-          </div>
-        </div>
         <div class="panel panel-default">
           <div class="panel-heading">
             <h6 class="panel-title">Steam Information</h6>
           </div>
-            <?php
-            $twitch = json_decode(file_get_contents("https://api.twitch.tv/kraken/streams/{$config['twitch_channel']}?client_id={$config['twitch_clientid']}"), true)['stream'];
-            if (is_null($twitch)) {
-              echo "<div class=\"panel-body\">Twitch stream {$config['twitch_channel']} is offline.</div>";
-            } else {
-              echo <<<TWITCH
+          <?php
+          $twitch = json_decode(file_get_contents("https://api.twitch.tv/kraken/streams/{$config['twitch_channel']}?client_id={$config['twitch_clientid']}"), true)['stream'];
+          if (is_null($twitch)) {
+            echo "<div class=\"panel-body\">Twitch stream {$config['twitch_channel']} is offline.</div>";
+          } else {
+            echo <<<TWITCH
               <table class="table">
                 <tr>
                   <th>Status</th>
@@ -161,8 +162,8 @@ PEND;
                 </tr>
               </table>
 TWITCH;
-            }
-            ?>
+          }
+          ?>
         </div>
       </div>
     </div>
