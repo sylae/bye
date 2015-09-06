@@ -81,7 +81,7 @@ foreach ($teams as $id => $data) {
   }
   $teams[$id]['diff'] = $teams[$id]['pts'] - $teams[$id]['ptsgiven'];
 }
-uasort($teams, 'bigSort');
+uasort($teams, 'sortStanding');
 ?>
 <!DOCTYPE html>
 <html>

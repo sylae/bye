@@ -1,6 +1,6 @@
 <?php
 
-function bigSort($a, $b) {
+function sortStanding($a, $b) {
   $w = byWins($a, $b);
   $s = bySets($a, $b);
   $p = byPts($a, $b);
