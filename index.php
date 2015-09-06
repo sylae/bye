@@ -61,6 +61,7 @@ $data = json_decode(file_get_contents(
       <div class="col-md-5">
         <h3>Pending Matches</h3>
         <?php
+        uasort($data['matches'], 'sortMatches');
         foreach ($data['matches'] as $n => $info) {
           $d = $info['match'];
           $p1 = getName($d['player1_id'], $data, $d['player1_prereq_match_id'], $d['player1_is_prereq_match_loser']);
