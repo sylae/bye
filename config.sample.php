@@ -16,3 +16,7 @@ $config['challonge_expose'] = array(
   'bracket' => true,
   'standings' => false,
 );
+
+// settings for Twitch integration on the dashboard
+$config['twitch_clientid'] = "ddce269a1e3d054cae349621c198dd52"; 
+$config['twitch_channel'] = "sample";
