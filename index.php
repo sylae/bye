@@ -66,6 +66,7 @@ $data = json_decode(file_get_contents(
           $d = $info['match'];
           $p1 = getName($d['player1_id'], $data, $d['player1_prereq_match_id'], $d['player1_is_prereq_match_loser']);
           $p2 = getName($d['player2_id'], $data, $d['player2_prereq_match_id'], $d['player2_is_prereq_match_loser']);
+          $d['round'] = str_replace("-", "L", $d['round']);
 
           if ($d['state'] == "open") {
             echo <<<OPEN
@@ -76,28 +77,29 @@ $data = json_decode(file_get_contents(
             </div>
             <div class="panel-body collapse">
               <form class="form-horizontal" method="post">
+                <input type="hidden" name="match" value="{$d['id']}" />
                 <div class="form-group">
                   <label class="col-sm-6 control-label">{$p1}</label>
                   <div class="col-sm-2">
-                    <input class="form-control input-sm" name="p1r1">
+                    <input class="form-control input-sm" name="p1r1" />
                   </div>
                   <div class="col-sm-2">
-                    <input class="form-control input-sm" name="p1r2">
+                    <input class="form-control input-sm" name="p1r2" />
                   </div>
                   <div class="col-sm-2">
-                    <input class="form-control input-sm" name="p1r3">
+                    <input class="form-control input-sm" name="p1r3" />
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-6 control-label">{$p2}</label>
                   <div class="col-sm-2">
-                    <input class="form-control input-sm" name="p2r1">
+                    <input class="form-control input-sm" name="p2r1" />
                   </div>
                   <div class="col-sm-2">
-                    <input class="form-control input-sm" name="p2r2">
+                    <input class="form-control input-sm" name="p2r2" />
                   </div>
                   <div class="col-sm-2">
-                    <input class="form-control input-sm" name="p2r3">
+                    <input class="form-control input-sm" name="p2r3" />
                   </div>
                 </div>
                 <div class="form-group">
