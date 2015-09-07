@@ -2,7 +2,7 @@
 require_once 'config.php';
 require_once 'sorts.php';
 require_once 'misc.php';
-
+$debug = array();
 $data = json_decode(file_get_contents(
       "https://api.challonge.com/v1/tournaments/" .
       $config['challonge_id'] .
@@ -12,6 +12,7 @@ $data = json_decode(file_get_contents(
     ), true)['tournament'];
 
 if (array_key_exists('match', $_POST)) {
+  $debug['http_post'] = $_POST;
   // filter time!
   $p = array();
   foreach ($_POST as $k => $v) {
@@ -53,6 +54,7 @@ if (array_key_exists('match', $_POST)) {
   );
   $resp = httpPut(array(
     'api_key' => $config['challonge_api'], 'match' => $match), "https://api.challonge.com/v1/tournaments/{$config['challonge_id']}/matches/{$m['id']}.json");
+  $debug['challonge_response'] = json_decode($resp, true);
 
   // assume it worked--if it didn't we'd get a text wall of errors. Re-get the data since we did something
   $data = json_decode(file_get_contents(
@@ -271,7 +273,12 @@ TWITCH;
             <div class="panel panel-default">
               <div class="panel-heading">Debug Info</div>
               <div class="panel-body collapse">
-                <?php var_dump($_POST, $data['matches'], $data['participants']); ?>
+                <?php
+                foreach ($debug as $k => $v) {
+                  echo "<h6>$k</h6>";
+                  var_dump($v);
+                }
+                ?>
               </div>
             </div>
           </div>
