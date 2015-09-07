@@ -15,6 +15,7 @@ $config['challonge_id'] = 'sample';
 $config['challonge_expose'] = array(
   'bracket' => true,
   'standings' => false,
+  'scorebug' => false,
 );
 
 // settings for Twitch integration on the dashboard

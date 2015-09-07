@@ -100,7 +100,7 @@ $score = array(
           </tr>
           </tbody>
         </table><?php
-        if ($config['challonge_expose']['standings']) {
+        if ($config['challonge_expose']['scorebug']) {
           echo <<<CHA
         <div style="background: rgba(21, 21, 21, 0.7);"><div class="panel-footer" style="background: rgba(21, 21, 21, 0.7);"><span class="pull-right"><small>Powered by Challonge <img src="img/challonge.png" style="height:1em" /></small></span><br /></div></div>
 CHA;
