@@ -100,12 +100,15 @@ uasort($teams, 'sortStanding');
             $(this).css('opacity', 0);
           }
         });
+        setTimeout(function() {
+          $(".panel").css('opacity', 1);
+        }, 1000);
       });
     </script>
   </head>
   <body style="background:transparent;">
     <div class="container">
-      <div class="panel panel-default navbar-fixed-bottom" style="background: rgba(0,0,0,0);transition: opacity 1s ease-in-out;">
+      <div class="panel panel-default navbar-fixed-bottom" style="background: rgba(0,0,0,0);transition: opacity 1s ease-in-out; opacity:0;">
         <table class="table" style="background: url('/img/rocket_bg.png') no-repeat scroll right top, url('/img/stripe.png') no-repeat scroll left top, rgba(21, 21, 21, 0.7);">
           <thead>
             <tr>
