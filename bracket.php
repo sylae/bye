@@ -1,4 +1,12 @@
 <?php
+/**
+ * Display a bracket. Useful for elimination tournaments.
+ * @uses bracket_iframe.php
+ *
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt GNU General Public License 3
+ * @author Sylae Jiendra Corell <sylae@calref.net>
+ */
+
 require_once 'config.php';
 ?>
 <!DOCTYPE html>

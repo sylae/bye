@@ -1,4 +1,11 @@
 <?php
+/**
+ * Helper for bracket.php. Pulls the "official" challonge bracket, removes the stuff we don't need
+ * and styles it to match our theme.
+ *
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt GNU General Public License 3
+ * @author Sylae Jiendra Corell <sylae@calref.net>
+ */
 require_once 'config.php';
 require 'qp.php'; // don't fall for that 2.x crap.
 

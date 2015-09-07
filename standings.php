@@ -1,4 +1,11 @@
 <?php
+/**
+ * Display a table showing standings for the teams. Useful for round-robin.
+ *
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt GNU General Public License 3
+ * @author Sylae Jiendra Corell <sylae@calref.net>
+ */
+
 require_once 'config.php';
 require_once 'sorts.php';
 

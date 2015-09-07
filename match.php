@@ -1,4 +1,11 @@
 <?php
+/**
+ * A little lower-third bug to show the set scores for the current match.
+ *
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt GNU General Public License 3
+ * @author Sylae Jiendra Corell <sylae@calref.net>
+ */
+
 require_once 'config.php';
 require_once 'sorts.php';
 require_once 'misc.php';
