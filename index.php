@@ -10,6 +10,59 @@ $data = json_decode(file_get_contents(
       $config['challonge_api'] .
       "&include_participants=1&include_matches=1"
     ), true)['tournament'];
+
+if (array_key_exists('match', $_POST)) {
+  // filter time!
+  $p = array();
+  foreach ($_POST as $k => $v) {
+    $p[$k] = is_numeric($v) ? (int) $v : "";
+  }
+  $m = getMatch($p['match'], $data);
+  $score = array();
+  $p1w = 0;
+  $p2w = 0;
+
+  // round 1
+  if ($p['p1r1'] > $p['p2r1']) {
+    $p1w++;
+  } else {
+    $p2w++;
+  }
+  $score[1] = $p['p1r1'] . "-" . $p['p2r1'];
+
+  // round 2
+  if ($p['p1r2'] > $p['p2r2']) {
+    $p1w++;
+  } else {
+    $p2w++;
+  }
+  $score[2] = $p['p1r2'] . "-" . $p['p2r2'];
+
+  // round 3 (if applicable)
+  if (($p1w > 1 || $p2w > 1) && is_int($p['p1r3']) && is_int($p['p2r3'])) {
+    if ($p['p1r3'] > $p['p2r3']) {
+      $p1w++;
+    } else {
+      $p2w++;
+    }
+    $score[3] = $p['p1r3'] . "-" . $p['p2r3'];
+  }
+  $match = array(
+    'winner_id' => ($p1w > $p2w) ? $m['player1_id'] : $m['player2_id'],
+    'scores_csv' => implode(",", $score),
+  );
+  $resp = httpPut(array(
+    'api_key' => $config['challonge_api'], 'match' => $match), "https://api.challonge.com/v1/tournaments/{$config['challonge_id']}/matches/{$m['id']}.json");
+
+  // assume it worked--if it didn't we'd get a text wall of errors. Re-get the data since we did something
+  $data = json_decode(file_get_contents(
+        "https://api.challonge.com/v1/tournaments/" .
+        $config['challonge_id'] .
+        ".json?api_key=" .
+        $config['challonge_api'] .
+        "&include_participants=1&include_matches=1"
+      ), true)['tournament'];
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -218,7 +271,7 @@ TWITCH;
             <div class="panel panel-default">
               <div class="panel-heading">Debug Info</div>
               <div class="panel-body collapse">
-                <?php var_dump($twitch, $data, $data['matches'], $data['participants']); ?>
+                <?php var_dump($_POST, $data['matches'], $data['participants']); ?>
               </div>
             </div>
           </div>
