@@ -164,7 +164,7 @@ if (array_key_exists('match', $_POST)) {
                 </div>
               </form>
           </div>
-          <div class="panel-footer collapse"><a href="/match.php?match=">Matchbug</a> - <a href="/team.php?team=">Team 1</a> - <a href="/team.php?team=">Team 2</a></div>
+          <div class="panel-footer collapse"><a href="/match.php?match={$d['id']}">Matchbug</a> - <a href="/team.php?team={$d['player1_id']}">Team 1</a> - <a href="/team.php?team={$d['player2_id']}">Team 2</a></div>
         </div>
 OPEN;
           } elseif ($d['state'] == "pending") {
@@ -179,7 +179,7 @@ OPEN;
             <p><small><em>versus</em></small></p>
             <p><strong>{$p2}</strong></p>
           </div>
-          <div class="panel-footer collapse"><a href="/match.php?match=">Matchbug</a> - <a href="/team.php?team=">Team 1</a> - <a href="/team.php?team=">Team 2</a></div>
+          <div class="panel-footer collapse"><a href="/match.php?match={$d['id']}">Matchbug</a> - <a href="/team.php?team={$d['player1_id']}">Team 1</a> - <a href="/team.php?team={$d['player2_id']}">Team 2</a></div>
         </div>
 PEND;
           }
