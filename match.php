@@ -54,7 +54,6 @@ $attach = json_decode(file_get_contents(
 if (count($attach)>0) {
   $match['scores_csv'] = $attach[0]['match_attachment']['description'];
 }
-var_dump($attach);
 $loser = ($match['round'] < 0) ? "Loser's Bracket " : "";
 $match['round'] = ($match['round'] < 0) ? $match['round'] * -1 : $match['round'];
 
