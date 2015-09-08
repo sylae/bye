@@ -38,6 +38,23 @@ if ($m == "active") {
     }
   }
 }
+if(!isset($match)) {
+  die();
+}
+
+// An attachment score CSV will override the challonge-reported score.
+// This is because challonge API will not let us save a score without
+// finalizing the match. We can, however, do attachments.
+$attach = json_decode(file_get_contents(
+    "https://api.challonge.com/v1/tournaments/" .
+    $config['challonge_id'] .
+    "/matches/{$match['id']}/attachments.json?api_key=" .
+    $config['challonge_api']
+  ), true);
+if (count($attach)>0) {
+  $match['scores_csv'] = $attach[0]['match_attachment']['description'];
+}
+var_dump($attach);
 $loser = ($match['round'] < 0) ? "Loser's Bracket " : "";
 $match['round'] = ($match['round'] < 0) ? $match['round'] * -1 : $match['round'];
 
