@@ -5,37 +5,46 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GNU General Public License 3
  * @author Sylae Jiendra Corell <sylae@calref.net>
  */
-
 require_once 'config.php';
 require_once 'sorts.php';
 require_once 'misc.php';
 
 if (is_numeric($_GET['match'])) {
   $m = (int) $_GET['match'];
+  $match = json_decode(file_get_contents(
+        "https://api.challonge.com/v1/tournaments/" .
+        $config['challonge_id'] .
+        "/matches/$m.json?api_key=" .
+        $config['challonge_api']
+      ), true)['match'];
+} elseif ($_GET['match'] == "active") {
+  $m = "active";
 } else {
   die();
 }
 
-$match = json_decode(file_get_contents(
-      "https://api.challonge.com/v1/tournaments/" .
-      $config['challonge_id'] .
-      "/matches/$m.json?api_key=" .
-      $config['challonge_api']
-    ), true)['match'];
 $data = json_decode(file_get_contents(
       "https://api.challonge.com/v1/tournaments/" .
       $config['challonge_id'] .
       ".json?api_key=" .
       $config['challonge_api'] .
-      "&include_participants=1"
+      "&include_participants=1&include_matches=1"
     ), true)['tournament'];
 
+if ($m == "active") {
+  foreach ($data['matches'] as $i => $d) {
+    if (!is_null($d['match']['underway_at'])) {
+      $match = $d['match'];
+    }
+  }
+}
+var_dump($match, strlen($match['scores_csv']));
 $loser = ($match['round'] < 0) ? "Loser's Bracket " : "";
-$match['round'] = ($match['round'] < 0) ? $match['round']*-1 : $match['round'];
+$match['round'] = ($match['round'] < 0) ? $match['round'] * -1 : $match['round'];
 
 $p1 = array(1 => "", 2 => "", 3 => "");
 $p2 = array(1 => "", 2 => "", 3 => "");
-if ($match['state'] == "complete") {
+if (strlen($match['scores_csv']) > 2) {
   $points = explode(",", $match['scores_csv']);
   $r = 1;
   foreach ($points as $k => $val) {
@@ -47,7 +56,7 @@ if ($match['state'] == "complete") {
     }
   }
 }
-foreach (array(1,2,3) as $n) {
+foreach (array(1, 2, 3) as $n) {
   if ($p1[$n] > $p2[$n]) {
     $p1[$n] = "<strong>{$p1[$n]}</strong>";
   } else {
