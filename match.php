@@ -38,7 +38,6 @@ if ($m == "active") {
     }
   }
 }
-var_dump($match, strlen($match['scores_csv']));
 $loser = ($match['round'] < 0) ? "Loser's Bracket " : "";
 $match['round'] = ($match['round'] < 0) ? $match['round'] * -1 : $match['round'];
 
