@@ -130,11 +130,15 @@ if (array_key_exists('match', $_POST)) {
           $p2 = getName($d['player2_id'], $data, $d['player2_prereq_match_id'], $d['player2_is_prereq_match_loser']);
           $d['round'] = str_replace("-", "L", $d['round']);
 
+          $notif = "";
           if ($d['state'] == "open") {
+            if (!is_null($d['underway_at'])) {
+              $notif = '<span class="glyphicon glyphicon-star text-primary" title="Active match"></span>';
+            }
             echo <<<OPEN
         <div class="panel panel-default">
           <div class="panel-heading">
-            <div class="pull-right"><p class="text-muted">Open</p></div>
+            <div class="pull-right"><p class="text-muted">$notif Open</p></div>
             <a name="match_{$d['id']}"></a>{$d['identifier']} (Round {$d['round']}) <small>Match ID {$d['id']}</small>
             </div>
             <div class="panel-body collapse">
