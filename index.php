@@ -134,6 +134,7 @@ if (array_key_exists('match', $_POST)) {
           <ul class="nav navbar-nav">
             <li><a href="/bracket.php">Bracket</a></li>
             <li><a href="/standings.php">Standings</a></li>
+            <li><a href="/match.php?match=active">Active Match</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="http://challonge.com/<?php echo $config['challonge_id']; ?>">Tournament on Challonge <img src="img/challonge.png" style="height:1em" /></a></li>
