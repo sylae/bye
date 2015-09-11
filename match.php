@@ -90,7 +90,7 @@ $score = array(
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Match</title>
+    <title><?php echo $m;?> - Match</title>
     <script src="/js/jquery.min.js" type="text/javascript" charset="UTF-8"></script>
     <link href="/css/bootstrap.css" rel="stylesheet" />
     <script src="/js/bootstrap.min.js"></script>
