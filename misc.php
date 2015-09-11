@@ -51,13 +51,14 @@ function getMatch($needle, $haystack) {
  * @link http://stackoverflow.com/a/6609181
  * @param array $payload Data to upload
  * @param string $destination URL to PUT at
+ * @param string $method Method to use, default PUT
  * @return string the response from the server.
  */
-function httpPut($payload, $destination) {
+function httpPut($payload, $destination, $method='PUT') {
   $options = array(
     'http' => array(
       'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-      'method' => 'PUT',
+      'method' => $method,
       'content' => http_build_query($payload),
     ),
   );
