@@ -57,15 +57,39 @@ if (array_key_exists('match', $_POST)) {
   $match = array(
     'scores_csv' => implode(",", $score),
   );
-  
-  //TODO: if not final, use attachments instead. Challonge fails right now is final is unticked.
+
   if (array_key_exists('done', $_POST)) {
     $match['winner_id'] = ($p1w > $p2w) ? $m['player1_id'] : $m['player2_id'];
-  }
-  $resp = httpPut(array(
-    'api_key' => $config['challonge_api'], 'match' => $match), "https://api.challonge.com/v1/tournaments/{$config['challonge_id']}/matches/{$m['id']}.json");
-    $debug['challonge_response'] = json_decode($resp, true);
 
+    $resp = httpPut(array(
+      'api_key' => $config['challonge_api'], 'match' => $match), "https://api.challonge.com/v1/tournaments/{$config['challonge_id']}/matches/{$m['id']}.json");
+    $debug['challonge_response'] = json_decode($resp, true);
+  } else {
+    // save it as an attachment.
+    // first kill existing attachment
+    $attach = json_decode(file_get_contents(
+        "https://api.challonge.com/v1/tournaments/" .
+        $config['challonge_id'] .
+        "/matches/{$m['id']}/attachments.json?api_key=" .
+        $config['challonge_api']
+      ), true);
+    foreach ($attach as $n => $payload) {
+      if (substr($payload['match_attachment']['description'], 0, 18) == '$BYEPENDINGSCORE$:') {
+        $resp = httpPut(array(
+          'api_key' => $config['challonge_api'], 'match' => $match), "https://api.challonge.com/v1/tournaments/{$config['challonge_id']}"
+          . "/matches/{$m['id']}/attachments/{$payload['match_attachment']['id']}.json", 'DELETE');
+        $debug['challonge_response_delete_existing'] = json_decode($resp, true);
+      }
+    }
+
+    // now (re)make the attachement
+    $attachment = array(
+      'description' => '$BYEPENDINGSCORE$:' . $match['scores_csv'],
+    );
+    $resp = httpPut(array(
+      'api_key' => $config['challonge_api'], 'match_attachment' => $attachment), "https://api.challonge.com/v1/tournaments/{$config['challonge_id']}/matches/{$m['id']}/attachments.json", 'POST');
+    $debug['challonge_response'] = json_decode($resp, true);
+  }
   // assume it worked--if it didn't we'd get a text wall of errors. Re-get the data since we did something
   $data = json_decode(file_get_contents(
         "https://api.challonge.com/v1/tournaments/" .
