@@ -37,3 +37,38 @@ a:hover, a:focus {
 .challonge_tournaments .challonge_bracket div.rounds table {
   background: url('/img/stripe.png') no-repeat scroll left top, rgba(21, 21, 21, 0.7);
 }
+.blank-round {
+  display: none;
+}
+
+.challonge_tournaments .challonge_bracket div.bottom_score,
+.challonge_tournaments .challonge_bracket div.top_score {
+  background: rgba(128, 128, 128, 0.5) none repeat scroll 0% 0%;
+  color: #fff;
+}
+
+.challonge_tournaments .challonge_bracket div.top_score.winner,
+.challonge_tournaments .challonge_bracket div.bottom_score.winner {
+  background: rgba(246, 136, 0, 0.8) none repeat scroll 0% 0%;
+  color: #fff;
+}
+
+.challonge_tournaments .challonge_bracket div.top_seed,
+.challonge_tournaments .challonge_bracket div.bottom_seed,
+.challonge_tournaments .challonge_bracket div.top_dark,
+.challonge_tournaments .challonge_bracket div.bottom_dark,
+.challonge_tournaments .challonge_bracket div.match_top_half,
+.challonge_tournaments .challonge_bracket div.match_bottom_half {
+  background: rgba(21, 21, 21, 0.7) none repeat scroll 0% 0%;
+  color: #fff;
+}
+
+.challonge_tournaments .challonge_bracket div.top_dark,
+.challonge_tournaments .challonge_bracket div.bottom_dark {
+  background: transparent;
+}
+
+.challonge_tournaments .challonge_bracket table.match_table a.match_identifier {
+	font-size: 9px;
+	background: rgba(21, 21, 21, 0.7) none repeat scroll 0% 0%;
+}
