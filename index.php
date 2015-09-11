@@ -262,7 +262,7 @@ PEND;
                   <td>{$twitch['viewers']}</td>
                 </tr>
                 <tr>
-                  <td colspan="2"><img src="{$twitch['preview']['large']}" class="img-responsive" /></td>
+                  <td colspan="2"><img src="{$twitch['preview']['large']}" class="img-responsive" style="width:100%;" /></td>
                 </tr>
               </table>
 TWITCH;
