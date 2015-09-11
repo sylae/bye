@@ -5,7 +5,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GNU General Public License 3
  * @author Sylae Jiendra Corell <sylae@calref.net>
  */
-
 require_once 'config.php';
 require_once 'sorts.php';
 require_once 'misc.php';
@@ -56,12 +55,16 @@ if (array_key_exists('match', $_POST)) {
     $score[3] = $p['p1r3'] . "-" . $p['p2r3'];
   }
   $match = array(
-    'winner_id' => ($p1w > $p2w) ? $m['player1_id'] : $m['player2_id'],
     'scores_csv' => implode(",", $score),
   );
+  
+  //TODO: if not final, use attachments instead. Challonge fails right now is final is unticked.
+  if (array_key_exists('done', $_POST)) {
+    $match['winner_id'] = ($p1w > $p2w) ? $m['player1_id'] : $m['player2_id'];
+  }
   $resp = httpPut(array(
     'api_key' => $config['challonge_api'], 'match' => $match), "https://api.challonge.com/v1/tournaments/{$config['challonge_id']}/matches/{$m['id']}.json");
-  $debug['challonge_response'] = json_decode($resp, true);
+    $debug['challonge_response'] = json_decode($resp, true);
 
   // assume it worked--if it didn't we'd get a text wall of errors. Re-get the data since we did something
   $data = json_decode(file_get_contents(
@@ -169,8 +172,13 @@ if (array_key_exists('match', $_POST)) {
                   </div>
                 </div>
                 <div class="form-group">
-                  <div class="col-sm-offset-6 col-sm-6">
+                  <div class="col-sm-offset-6 col-sm-3">
                     <button type="submit" class="btn btn-default">Submit Score</button>
+                  </div>
+                  <div class="col-sm-3 checkbox">
+                    <label>
+                      <input type="checkbox" name="done"> Final?
+                    </label>
                   </div>
                 </div>
               </form>
