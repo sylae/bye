@@ -38,7 +38,7 @@ if ($m == "active") {
     }
   }
 }
-if(!isset($match)) {
+if (!isset($match)) {
   die();
 }
 
@@ -51,8 +51,10 @@ $attach = json_decode(file_get_contents(
     "/matches/{$match['id']}/attachments.json?api_key=" .
     $config['challonge_api']
   ), true);
-if (count($attach)>0) {
-  $match['scores_csv'] = $attach[0]['match_attachment']['description'];
+foreach ($attach as $n => $payload) {
+  if (substr($payload['match_attachment']['description'], 0, 18)=='$BYEPENDINGSCORE$:') {
+    $match['scores_csv'] = str_replace('$BYEPENDINGSCORE$:', '', $payload['match_attachment']['description']);
+  }
 }
 $loser = ($match['round'] < 0) ? "Loser's Bracket " : "";
 $match['round'] = ($match['round'] < 0) ? $match['round'] * -1 : $match['round'];
