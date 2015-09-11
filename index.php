@@ -38,12 +38,14 @@ if (array_key_exists('match', $_POST)) {
   $score[1] = $p['p1r1'] . "-" . $p['p2r1'];
 
   // round 2
-  if ($p['p1r2'] > $p['p2r2']) {
-    $p1w++;
-  } else {
-    $p2w++;
+  if (is_int($p['p1r2']) && is_int($p['p2r2'])) {
+    if ($p['p1r2'] > $p['p2r2']) {
+      $p1w++;
+    } else {
+      $p2w++;
+    }
+    $score[2] = $p['p1r2'] . "-" . $p['p2r2'];
   }
-  $score[2] = $p['p1r2'] . "-" . $p['p2r2'];
 
   // round 3 (if applicable)
   if (($p1w > 1 || $p2w > 1) && is_int($p['p1r3']) && is_int($p['p2r3'])) {
