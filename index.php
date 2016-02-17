@@ -239,36 +239,6 @@ PEND;
           <div class="panel-heading">
             <h6 class="panel-title">Steam Information</h6>
           </div>
-          <?php
-          $twitch = json_decode(file_get_contents("https://api.twitch.tv/kraken/streams/{$config['twitch_channel']}?client_id={$config['twitch_clientid']}"), true)['stream'];
-          if (is_null($twitch)) {
-            echo "<div class=\"panel-body\">Twitch stream {$config['twitch_channel']} is offline.</div>";
-          } else {
-            echo <<<TWITCH
-              <table class="table">
-                <tr>
-                  <th>Status</th>
-                  <td>{$twitch['channel']['status']}</td>
-                </tr>
-                <tr>
-                  <th>Game</th>
-                  <td>{$twitch['game']}</td>
-                </tr>
-                <tr>
-                  <th>Video</th>
-                  <td>{$twitch['video_height']}p @ {$twitch['average_fps']}fps</td>
-                </tr>
-                <tr>
-                  <th>Viewers</th>
-                  <td>{$twitch['viewers']}</td>
-                </tr>
-                <tr>
-                  <td colspan="2"><img src="{$twitch['preview']['large']}" class="img-responsive" style="width:100%;" /></td>
-                </tr>
-              </table>
-TWITCH;
-          }
-          ?>
         </div>
       </div>
     </div>
