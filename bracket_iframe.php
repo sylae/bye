@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Helper for bracket.php. Pulls the "official" challonge bracket, removes the stuff we don't need
  * and styles it to match our theme.
