@@ -69,6 +69,12 @@ a:hover, a:focus {
 }
 
 .challonge_tournaments .challonge_bracket table.match_table a.match_identifier {
-	font-size: 9px;
-	background: rgba(21, 21, 21, 0.7) none repeat scroll 0% 0%;
+  font-size: 9px;
+  background: rgba(21, 21, 21, 0.7) none repeat scroll 0% 0%;
+}
+html, body {
+  height: auto;
+}
+.round-label {
+  display: none;
 }
