@@ -1,7 +1,7 @@
 <?php
 
 // User agent to use for any requests
-ini_set("user_agent","sylae/bye-".trim(`git rev-parse HEAD`));
+ini_set("user_agent", "sylae/bye-" . trim(`git rev-parse HEAD`));
 
 $config = array();
 

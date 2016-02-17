@@ -111,8 +111,8 @@ if (array_key_exists('match', $_POST)) {
     <script src="/js/bootstrap.min.js"></script>
     <meta charset="UTF-8" />
     <script>
-      $(document).ready(function() {
-        $(this).find(".panel-heading").click(function(event) {
+      $(document).ready(function () {
+        $(this).find(".panel-heading").click(function (event) {
           $(this).siblings(".collapse").collapse('toggle');
         });
       });
