@@ -35,9 +35,21 @@ if ($m == "active") {
   foreach ($data['matches'] as $i => $d) {
     if (!is_null($d['match']['underway_at'])) {
       $match = $d['match'];
+      break;
     }
   }
 }
+
+if (!isset($match)) { // just find an open match to present
+  foreach ($data['matches'] as $i => $d) {
+    if ($d['match']['state'] == "open") {
+      $match = $d['match'];
+      break;
+    }
+  }
+}
+
+// okay, now we panic
 if (!isset($match)) {
   die();
 }
