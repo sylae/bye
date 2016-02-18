@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="/js/jquery.min.js" type="text/javascript" charset="UTF-8"></script>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.autoheight.js"></script>
+    <title>sylae/bye</title>
+    <script>
+      function updateStandings() {
+        $.getJSON("/standings.php", function (data) {
+          $("#standings tbody").empty();
+          $.each(data, function (id, payload) {
+            var line = $("<tr />");
+            $("<td />", {
+              id: id,
+              style: 'text-align: left;',
+              text: payload['name']
+            }).appendTo(line);
+            $("<td />", {text: payload['w']}).appendTo(line);
+            $("<td />", {text: payload['l']}).appendTo(line);
+            $("<td />", {text: payload['pct']}).appendTo(line);
+            $("<td />", {text: payload['sets']}).appendTo(line);
+            $("<td />", {text: payload['pts']}).appendTo(line);
+            $("<td />", {text: payload['diff']}).appendTo(line);
+            line.appendTo("#standings tbody");
+          });
+        });
+      }
+      $(document).ready(function () {
+        updateStandings();
+        window.setInterval(updateStandings, 15000);
+      });
+    </script>
+    <meta charset="UTF-8" />
+    <style>
+      .carousel .item {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+      .carousel-inner {
+        background: url("/img/crtv hex corner-line.png");
+        left: -150px;
+      }
+      .carousel .item p {
+        margin: 5px;
+      }
+      .byePanel {
+        background: url('/img/rocket_bg.png') no-repeat scroll right top, url('/img/stripe.png') no-repeat scroll left top, rgba(21, 21, 21, 0.7);
+      }
+      #marquee {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: url('/img/crtv hex corner.png') no-repeat scroll right top / contain;
+        opacity: 0.7;
+        color: #fff;
+      }
+      #standings {
+        position: absolute;
+        left: 5%;
+        bottom: 10%;
+        width: 30%;
+      }
+      #scorebug {
+        position: absolute;
+        left: 5%;
+        bottom: 10%;
+        width: 30%;
+      }
+      #bracket {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        left: 0%;
+        bottom: 0%;
+        width: 100%;
+        height: 100%;
+      }
+      #bracket > .panel {
+        width: 65%;
+      }
+    </style>
+  </head>
+  <body style="background:url('https://c312441.ssl.cf1.rackcdn.com/boot/img/bg3_s.png');">
+    <div class="container" id="standings">
+      <div class="panel panel-default" style="background: rgba(0,0,0,0);transition: opacity 1s ease-in-out;">
+        <table class="table byePanel">
+          <thead>
+            <tr>
+              <th width="100%">STANDINGS</th>
+              <th style="text-align: center;">W</th>
+              <th style="text-align: center;">L</th>
+              <th style="text-align: center;">Pct</th>
+              <th style="text-align: center;">Sets</th>
+              <th style="text-align: center;">Goals</th>
+              <th style="text-align: center;">Diff</th>
+            </tr>
+          </thead>
+          <tbody style="text-align: center;">
+          </tbody>
+        </table>
+        <div style="background: rgba(21, 21, 21, 0.7);">
+          <div class="panel-footer" style="background: rgba(21, 21, 21, 0.5);">
+            <span class="pull-right"><small>Powered by Challonge <img src="/img/challonge.png" style="height:1em" alt="" /></small></span>
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" id="bracket">
+      <div class="panel panel-default" style="background: rgba(0,0,0,0);transition: opacity 1s ease-in-out;">
+        <table class="table byePanel">
+          <thead>
+            <tr>
+              <th width="100%">BRACKET</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><iframe class="autoHeight" src="bracket_iframe.php" width="100%" height="750" frameborder="0" scrolling="no" allowtransparency="true"></iframe></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="background: rgba(21, 21, 21, 0.7);">
+          <div class="panel-footer" style="background: rgba(21, 21, 21, 0.7);">
+            <span class="pull-right"><small>Powered by Challonge <img src="img/challonge.png" style="height:1em" alt="" /></small></span><br />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" id="scorebug">
+      <div class="panel panel-default" style="background: rgba(0,0,0,0);transition: opacity 1s ease-in-out;">
+        <table class="table byePanel">
+          <thead>
+            <tr>
+              <th width="100%" colspan="4">
+                <small>
+                  <small style="text-transform: uppercase;"><?php echo $data['name']; ?></small>
+                </small>
+                <br />
+                <h5><?php echo $loser ?>Round <?php echo $match['round']; ?>, Match <?php echo $match['identifier']; ?></h5>
+              </th>
+          </thead>
+          <tbody style="text-align: center;">
+            <tr>
+              <th><h4 id="score_p1"><?php echo $score['p1']; ?></h4></th>
+              <td><h4 id="score_p1p1"><?php echo $score['p1pts']['1']; ?></h4></td>
+              <td><h4 id="score_p1p2"><?php echo $score['p1pts']['2']; ?></h4></td>
+              <td><h4 id="score_p1p3"><?php echo $score['p1pts']['3']; ?></h4></td>
+            </tr>
+            <tr>
+              <th><h4 id="score_p2"><?php echo $score['p2']; ?></h4></th>
+              <td><h4 id="score_p2p1"><?php echo $score['p2pts']['1']; ?></h4></td>
+              <td><h4 id="score_p2p2"><?php echo $score['p2pts']['2']; ?></h4></td>
+              <td><h4 id="score_p2p3"><?php echo $score['p2pts']['3']; ?></h4></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="background: rgba(21, 21, 21, 0.7);">
+          <div class="panel-footer" style="background: rgba(21, 21, 21, 0.7);">
+            <span class="pull-right"><small>Powered by Challonge <img src="img/challonge.png" style="height:1em" alt="" /></small></span><br />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="marquee">
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox" id="ticker">
+          <div class="item static active">
+            <p class="text-center">We love hearing your feedback! Shoot us a line at crtv@calref.net.</p>
+          </div>
+          <div class="item static">
+            <p class="text-center">Want to know when we're broadcasting? Follow us on the Youtube for notifications!</p>
+          </div>
+          <div class="item static">
+            <p class="text-center">Have some spare toxic attitude? Send it to us via @CalRefTV on the Twitter.</p>
+          </div>
+          <div class="item">
+            <p class="text-center">Test4</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
