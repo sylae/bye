@@ -1,4 +1,5 @@
 <?php
+
 /**
  * A little lower-third bug to show the set scores for the current match.
  *
@@ -64,7 +65,7 @@ $attach = json_decode(file_get_contents(
     $config['challonge_api']
   ), true);
 foreach ($attach as $n => $payload) {
-  if (substr($payload['match_attachment']['description'], 0, 18)=='$BYEPENDINGSCORE$:') {
+  if (substr($payload['match_attachment']['description'], 0, 18) == '$BYEPENDINGSCORE$:') {
     $match['scores_csv'] = str_replace('$BYEPENDINGSCORE$:', '', $payload['match_attachment']['description']);
   }
 }
