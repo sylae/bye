@@ -243,17 +243,13 @@ PEND;
       </div>
     </div>
     <footer class="footer">
-      <?php
-      //attention whore
-      $auth = json_decode(file_get_contents("https://api.github.com/users/sylae"), true);
-      ?>
       <div class="container">
         <hr />
         <div class="row">
           <div class="col-md-4">
             <p>
               <strong><a href="https://github.com/sylae/bye">Bye - Tournament streaming toolkit</a></strong><br />
-              &copy; 2016 <img src="<?php echo $auth['avatar_url']; ?>" style="height:1em" /> <?php echo $auth['name']; ?> &lt;<a href="mailto:<?php echo $auth['email']; ?>"><?php echo $auth['email']; ?></a>&gt;
+              &copy; 2016 Sylae Corell &lt;<a href="mailto:sylae@calref.net">sylae@calref.net</a>&gt;
             </p>
             <p><small><em>
                   This program is free software: you can redistribute it and/or modify
