@@ -151,22 +151,23 @@ if (array_key_exists('match', $_POST)) {
           </div>
         </div>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-12">
         <h3>Pending Matches</h3>
-        <?php
-        uasort($data['matches'], 'sortMatches');
-        foreach ($data['matches'] as $n => $info) {
-          $d = $info['match'];
-          $p1 = getName($d['player1_id'], $data, $d['player1_prereq_match_id'], $d['player1_is_prereq_match_loser']);
-          $p2 = getName($d['player2_id'], $data, $d['player2_prereq_match_id'], $d['player2_is_prereq_match_loser']);
-          $d['round'] = str_replace("-", "L", $d['round']);
+        <div style="-moz-column-width: 500px;-webkit-column-width: 500px;">
+          <?php
+          uasort($data['matches'], 'sortMatches');
+          foreach ($data['matches'] as $n => $info) {
+            $d = $info['match'];
+            $p1 = getName($d['player1_id'], $data, $d['player1_prereq_match_id'], $d['player1_is_prereq_match_loser']);
+            $p2 = getName($d['player2_id'], $data, $d['player2_prereq_match_id'], $d['player2_is_prereq_match_loser']);
+            $d['round'] = str_replace("-", "L", $d['round']);
 
-          $notif = "";
-          if ($d['state'] == "open") {
-            if (!is_null($d['underway_at'])) {
-              $notif = '<span class="glyphicon glyphicon-star text-primary" title="Active match"></span>';
-            }
-            echo <<<OPEN
+            $notif = "";
+            if ($d['state'] == "open") {
+              if (!is_null($d['underway_at'])) {
+                $notif = '<span class="glyphicon glyphicon-star text-primary" title="Active match"></span>';
+              }
+              echo <<<OPEN
         <div class="panel panel-default">
           <div class="panel-heading">
             <div class="pull-right"><p class="text-muted">$notif Open</p></div>
@@ -214,8 +215,8 @@ if (array_key_exists('match', $_POST)) {
           <div class="panel-footer collapse"><a href="/match.php?match={$d['id']}">Matchbug</a> - <a href="/team.php?team={$d['player1_id']}">Team 1</a> - <a href="/team.php?team={$d['player2_id']}">Team 2</a></div>
         </div>
 OPEN;
-          } elseif ($d['state'] == "pending") {
-            echo <<<PEND
+            } elseif ($d['state'] == "pending") {
+              echo <<<PEND
         <div class="panel panel-default">
           <div class="panel-heading">
             <div class="pull-right"><p class="text-muted">Pending</p></div>
@@ -229,6 +230,7 @@ OPEN;
           <div class="panel-footer collapse"><a href="/match.php?match={$d['id']}">Matchbug</a> - <a href="/team.php?team={$d['player1_id']}">Team 1</a> - <a href="/team.php?team={$d['player2_id']}">Team 2</a></div>
         </div>
 PEND;
+            }
           }
           ?>
         </div>
