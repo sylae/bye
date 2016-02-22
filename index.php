@@ -230,15 +230,7 @@ OPEN;
         </div>
 PEND;
           }
-        }
-        ?>
-      </div>
-      <div class="col-md-7">
-        <h3>Tournament Information</h3>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h6 class="panel-title">Steam Information</h6>
-          </div>
+          ?>
         </div>
       </div>
     </div>
