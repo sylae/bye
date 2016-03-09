@@ -6,6 +6,7 @@
     <link href="/css/bootstrap.css" rel="stylesheet" />
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/jquery.autoheight.js"></script>
+    <script src="/node_modules/socket.io-client/socket.io.js"></script>
     <title>sylae/bye</title>
     <script>
       function updateStandings() {
@@ -25,12 +26,100 @@
             $("<td />", {text: payload['pts']}).appendTo(line);
             $("<td />", {text: payload['diff']}).appendTo(line);
             line.appendTo("#standings tbody");
+      function toggle(selector) {
+        if ($(selector).css('opacity') != 0) {
+          $(selector).css('opacity', 0);
+        } else {
+          $(selector).css('opacity', 1);
+        }
+      }
+      function forceOff(selector) {
+        $(selector).css('opacity', 0);
+      }
           });
         });
       }
       $(document).ready(function () {
         updateStandings();
         window.setInterval(updateStandings, 15000);
+        var socket = io('http://localhost:3000'); // @TODO: config
+        socket.on('streamctrl', function (msg) {
+          var payload = JSON.parse(msg);
+          console.log(payload);
+          if (payload.type == 17 && payload.value == 1) {
+            switch (payload.id) {
+              case 11: // sys mute
+                toggleAudio("sys");
+                break;
+              case 12: // mic mute
+                toggleAudio("mic");
+                break;
+              case 13: // SHIT
+                App.setPrimaryMicEnabled(false);
+                App.setPrimarySpeakerEnabled(false);
+                switchScene("SHIT !");
+                break;
+              case 8: // Break1
+                switchScene("Break 1");
+                break;
+              case 9: // Break2
+                switchScene("Break 2");
+                break;
+              case 10: // Break3
+                switchScene("Break 3");
+                break;
+              case 5: // Decklink
+                switchScene("Desktop");
+                break;
+              case 6: // Aux1
+                switchScene("Aux 1");
+                break;
+              case 7: // Aux2
+                switchScene("Aux 2");
+                break;
+              case 2: // Opt1
+                toggle("#standings .panel");
+                forceOff("#scorebug .panel");
+                forceOff("#bracket .panel");
+                updateStandings(true);
+                break;
+              case 3: // Opt2
+                forceOff("#standings .panel");
+                toggle("#scorebug .panel");
+                forceOff("#bracket .panel");
+                updateSorebug(true);
+                break;
+              case 4: // Opt3
+                forceOff("#standings .panel");
+                forceOff("#scorebug .panel");
+                toggle("#bracket .panel");
+                updateBracket(true);
+                break;
+              default:
+                break;
+            }
+          } else if (payload.type == 16) {
+            var v = ((payload.value + 1) * 100 / 1024);
+            switch (payload.id) {
+              case 4: // sys volume
+                App.setPrimarySpeakerLevel(v);
+                break;
+              case 5: // mic volume
+                App.setPrimaryMicLevel(v);
+                break;
+              case 3: // dog opacity
+                break;
+              case 2: // opt1 opacity
+                break;
+              case 0: // opt2 opacity
+                break;
+              case 1: // opt3 opacity
+                break;
+              default:
+                break;
+            }
+          }
+        });
       });
     </script>
     <meta charset="UTF-8" />
