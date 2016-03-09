@@ -9,23 +9,6 @@
     <script src="/node_modules/socket.io-client/socket.io.js"></script>
     <title>sylae/bye</title>
     <script>
-      function updateStandings() {
-        $.getJSON("/standings.php", function (data) {
-          $("#standings tbody").empty();
-          $.each(data, function (id, payload) {
-            var line = $("<tr />");
-            $("<td />", {
-              id: id,
-              style: 'text-align: left;',
-              text: payload['name']
-            }).appendTo(line);
-            $("<td />", {text: payload['w']}).appendTo(line);
-            $("<td />", {text: payload['l']}).appendTo(line);
-            $("<td />", {text: payload['pct']}).appendTo(line);
-            $("<td />", {text: payload['sets']}).appendTo(line);
-            $("<td />", {text: payload['pts']}).appendTo(line);
-            $("<td />", {text: payload['diff']}).appendTo(line);
-            line.appendTo("#standings tbody");
       function toggle(selector) {
         if ($(selector).css('opacity') != 0) {
           $(selector).css('opacity', 0);
@@ -36,12 +19,55 @@
       function forceOff(selector) {
         $(selector).css('opacity', 0);
       }
+
+      function updateBracket(force) {
+        // surely there is a better way
+        $('#bracket iframe').attr('src', $('#bracket iframe').attr('src'));
+      }
+      function updateStandings(force) {
+        if (force || $("#standings .panel").css("opacity") != 0) {
+          $.getJSON("/standings.php", function (data) {
+            $("#standings tbody").empty();
+            $.each(data, function (id, payload) {
+              var line = $("<tr />");
+              $("<td />", {
+                id: id,
+                style: 'text-align: left;',
+                text: payload['name']
+              }).appendTo(line);
+              $("<td />", {text: payload['w']}).appendTo(line);
+              $("<td />", {text: payload['l']}).appendTo(line);
+              $("<td />", {text: payload['pct']}).appendTo(line);
+              $("<td />", {text: payload['sets']}).appendTo(line);
+              $("<td />", {text: payload['pts']}).appendTo(line);
+              $("<td />", {text: payload['diff']}).appendTo(line);
+              line.appendTo("#standings tbody");
+            });
           });
-        });
+        }
+      }
+      function updateScorebug(force) {
+        if (force || $("#scorebug .panel").css("opacity") != 0) {
+          $.getJSON("/match.php?match=active", function (data) {
+            console.log(data);
+            $("#scorebug #tname").html(data.title);
+            $("#scorebug #mname").html(data.match);
+            $("#scorebug #score_p1").html(data.p1);
+            $("#scorebug #score_p1p1").html(data.p1pts.r1);
+            $("#scorebug #score_p1p2").html(data.p1pts.r2);
+            $("#scorebug #score_p1p3").html(data.p1pts.r3);
+            $("#scorebug #score_p2").html(data.p2);
+            $("#scorebug #score_p2p1").html(data.p2pts.r1);
+            $("#scorebug #score_p2p2").html(data.p2pts.r2);
+            $("#scorebug #score_p2p3").html(data.p2pts.r3);
+          });
+        }
       }
       $(document).ready(function () {
-        updateStandings();
+        updateStandings(true);
         window.setInterval(updateStandings, 15000);
+        updateScorebug(true);
+        window.setInterval(updateScorebug, 15000);
         var socket = io('http://localhost:3000'); // @TODO: config
         socket.on('streamctrl', function (msg) {
           var payload = JSON.parse(msg);
@@ -174,8 +200,29 @@
     </style>
   </head>
   <body style="background:url('https://c312441.ssl.cf1.rackcdn.com/boot/img/bg3_s.png');">
+    <div class="container" id="bracket">
+      <div class="panel panel-default" style="background: rgba(0,0,0,0);transition: opacity 1s ease-in-out;opacity:0;">
+        <table class="table byePanel">
+          <thead>
+            <tr>
+              <th width="100%">BRACKET</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><iframe class="autoHeight" src="bracket_iframe.php" width="100%" height="750" frameborder="0" scrolling="no" allowtransparency="true"></iframe></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="background: rgba(21, 21, 21, 0.7);">
+          <div class="panel-footer" style="background: rgba(21, 21, 21, 0.7);">
+            <span class="pull-right"><small>Powered by Challonge <img src="img/challonge.png" style="height:1em" alt="" /></small></span><br />
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container" id="standings">
-      <div class="panel panel-default" style="background: rgba(0,0,0,0);transition: opacity 1s ease-in-out;">
+      <div class="panel panel-default" style="background: rgba(0,0,0,0);transition: opacity 1s ease-in-out;opacity:0;">
         <table class="table byePanel">
           <thead>
             <tr>
@@ -199,38 +246,17 @@
         </div>
       </div>
     </div>
-    <div class="container" id="bracket">
-      <div class="panel panel-default" style="background: rgba(0,0,0,0);transition: opacity 1s ease-in-out;">
-        <table class="table byePanel">
-          <thead>
-            <tr>
-              <th width="100%">BRACKET</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><iframe class="autoHeight" src="bracket_iframe.php" width="100%" height="750" frameborder="0" scrolling="no" allowtransparency="true"></iframe></td>
-            </tr>
-          </tbody>
-        </table>
-        <div style="background: rgba(21, 21, 21, 0.7);">
-          <div class="panel-footer" style="background: rgba(21, 21, 21, 0.7);">
-            <span class="pull-right"><small>Powered by Challonge <img src="img/challonge.png" style="height:1em" alt="" /></small></span><br />
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="container" id="scorebug">
-      <div class="panel panel-default" style="background: rgba(0,0,0,0);transition: opacity 1s ease-in-out;">
+      <div class="panel panel-default" style="background: rgba(0,0,0,0);transition: opacity 1s ease-in-out;opacity:0;">
         <table class="table byePanel">
           <thead>
             <tr>
               <th width="100%" colspan="4">
                 <small>
-                  <small style="text-transform: uppercase;"><?php echo $data['name']; ?></small>
+                  <small style="text-transform: uppercase;" id="tname"><?php echo $data['name']; ?></small>
                 </small>
                 <br />
-                <h5><?php echo $loser ?>Round <?php echo $match['round']; ?>, Match <?php echo $match['identifier']; ?></h5>
+                <h5 id="mname"><?php echo $loser ?>Round <?php echo $match['round']; ?>, Match <?php echo $match['identifier']; ?></h5>
               </th>
           </thead>
           <tbody style="text-align: center;">
