@@ -1,0 +1,18 @@
+{
+  "name": "bye",
+  "version": "0.0.1",
+  "description": "Stream overlay software",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sylae Corell <sylae@calref.net>",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sylae/bye.git"
+  },
+  "dependencies": {
+    "serialport": "^2.0.6"
+  }
+}
