@@ -1,3 +1,19 @@
+(function () {
+  // Your base, I'm in it!
+  var originalAddClassMethod = jQuery.fn.addClass;
+
+  jQuery.fn.addClass = function () {
+    // Execute the original method.
+    var result = originalAddClassMethod.apply(this, arguments);
+
+    // trigger a custom event
+    jQuery(this).trigger('cssClassChanged');
+
+    // return the original result
+    return result;
+  }
+})(); // wtf is this even
+
 function toggle(selector) {
   if ($(selector).css('opacity') != 0) {
     $(selector).css('opacity', 0);
@@ -45,7 +61,6 @@ function updateMatchbug(force) {
         var line = $("<tr />", {
           id: "matchbug" + id
         });
-
         $("<td style=\"width:40%;text-align: right;\"><h4 id=\"p1\">" + data.teams[id].p1 + "</h4></td>\n\
            <td><small><small style=\"text-transform: uppercase;\" id\"match\">" + data.teams[id].match + "</small></small><br /><h5 id=\"score\">" + data.teams[id].score + "</h5></td>\n\
            <td style=\"width:40%;text-align: left;\"><h4 id=\"p2\">" + data.teams[id].p2 + "</h4></td>").appendTo(line);
@@ -74,6 +89,21 @@ function updateScorebug(force) {
   }
 }
 $(document).ready(function () {
+  removeAnItem = false;
+  $(document).on('slide.bs.carousel', function (data) {
+    var prev = $(data.relatedTarget).filter(".item:not(.static)");
+    if (prev.length) {
+      removeAnItem = true;
+      $("#ticker .item:nth-child(2)").bind('cssClassChanged', function () {
+        if (removeAnItem) {
+          $("#ticker").carousel("pause").removeData();
+          $(".item:not(.static)").last().remove();
+          $("#ticker").carousel();
+          removeAnItem = false;
+        }
+      });
+    }
+  })
   updateStandings(true);
   window.setInterval(updateStandings, 15000);
   updateScorebug(true);
