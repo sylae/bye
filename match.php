@@ -72,21 +72,21 @@ foreach ($attach as $n => $payload) {
 $loser = ($match['round'] < 0) ? "Loser's Bracket " : "";
 $match['round'] = ($match['round'] < 0) ? $match['round'] * -1 : $match['round'];
 
-$p1 = array(1 => "", 2 => "", 3 => "");
-$p2 = array(1 => "", 2 => "", 3 => "");
+$p1 = array("r1" => "", "r2" => "", "r3" => "");
+$p2 = array("r1" => "", "r2" => "", "r3" => "");
 if (strlen($match['scores_csv']) > 2) {
   $points = explode(",", $match['scores_csv']);
   $r = 1;
   foreach ($points as $k => $val) {
     $p = explode("-", $val);
     if (array_key_exists(1, $p)) {
-      $p1[$r] = $p[0];
-      $p2[$r] = $p[1];
+      $p1["r" . $r] = $p[0];
+      $p2["r" . $r] = $p[1];
       $r++;
     }
   }
 }
-foreach (array(1, 2, 3) as $n) {
+foreach (array("r1", "r2", "r3") as $n) {
   if ($p1[$n] > $p2[$n]) {
     $p1[$n] = "<strong>{$p1[$n]}</strong>";
   } else {
