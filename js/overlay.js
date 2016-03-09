@@ -88,6 +88,20 @@ function updateScorebug(force) {
     });
   }
 }
+
+function addMarquee(text) {
+
+  var line = $("<div />", {
+    class: "item"
+  });
+  $("<p />", {
+    class: "text-center",
+    text: text
+  }).appendTo(line);
+
+  line.appendTo(".carousel-inner#ticker");
+}
+
 $(document).ready(function () {
   removeAnItem = false;
   $(document).on('slide.bs.carousel', function (data) {
