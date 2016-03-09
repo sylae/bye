@@ -96,9 +96,7 @@ $(document).ready(function () {
       removeAnItem = true;
       $("#ticker .item:nth-child(2)").bind('cssClassChanged', function () {
         if (removeAnItem) {
-          $("#ticker").carousel("pause").removeData();
           $(".item:not(.static)").last().remove();
-          $("#ticker").carousel();
           removeAnItem = false;
         }
       });
