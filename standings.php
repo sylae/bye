@@ -90,5 +90,15 @@ foreach ($teams as $id => $data) {
 }
 uasort($teams, 'sortStanding');
 
+// http://stackoverflow.com/questions/20840914/sorting-a-json-object-different-order-in-firefox
+// jesus christ
+$counter = 0;
+$teams_s = [];
+foreach ($teams as $id => $data) {
+  $teams_s[$counter] = $data;
+  $teams_s[$counter]['id'] = $id;
+  $counter++;
+}
+
 header("Content-Type: application/json; charset=utf-8");
-echo json_encode($teams);
+echo json_encode($teams_s);
