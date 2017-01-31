@@ -7,7 +7,7 @@ Bye creates a set of HTML overlays that can be added to popular streaming
 software such as [XSplit](https://www.xsplit.com/). Any streaming system that supports HTML web page overlays
 should be able to render Bye pages properly.
 
-![example output](https://c312441.ssl.cf1.rackcdn.com/files.calref/16/2d502e1b_bye_example-standings.jpg)
+![example output](https://cdn.calref.net/files.calref/16/2d502e1b_bye_example-standings.jpg)
 
 ## Set up
 ### Dependencies
@@ -41,7 +41,7 @@ The overlays will by default use all available width, but only the height they n
 "page" defined by the XSplit source. It is highly recommended that the user set up their scenes and rehearse
 thouroughly before going live.
 
-![example config](https://c312441.ssl.cf1.rackcdn.com/files.calref/16/22a7f04e_bye_example-standings-config.png)
+![example config](https://cdn.calref.net/files.calref/16/22a7f04e_bye_example-standings-config.png)
 
 ## Contact and Contributions
 Please feel free to contact me via email or XMPP at sylae@calref.net if you have any questions or are interested
